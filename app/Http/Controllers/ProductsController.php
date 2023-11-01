@@ -15,7 +15,9 @@ class ProductsController extends Controller
      */
     public function index()
     {
-        //
+        $products = Product::all();
+
+        return ProductResource::collection($products);
     }
 
     /**
@@ -42,9 +44,9 @@ class ProductsController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(string $id)
+    public function show(Product $product)
     {
-        //
+        return new ProductResource($product);
     }
 
     /**
