@@ -13,6 +13,7 @@ return new class extends Migration
     {
         Schema::create('products', function (Blueprint $table) {
             $table->id();
+            $table->unsignedBigInteger('user_id');
             $table->unsignedBigInteger('category_id');
             $table->string('name');
             $table->json('images');
@@ -21,6 +22,7 @@ return new class extends Migration
             $table->integer('quantity');
             $table->string('sku')->unique();
             $table->decimal('weight', 4,1);
+            $table->foreign('user_id')->references('id')->on('users')->cascadeOnDelete();
             $table->foreign('category_id')->references('id')->on('product_categories')->cascadeOnDelete();
             $table->timestamps();
         });
