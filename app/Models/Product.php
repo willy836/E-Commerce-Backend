@@ -14,4 +14,20 @@ class Product extends Model
     public function getImagesAttribute($value) {
         return json_decode($value, true);
     }
+
+    public function user (){
+        return $this->belongsTo(User::class);
+    }
+
+    public function productCategory(){
+        return $this->belongsTo(ProductCategory::class);
+    }
+
+    public function order(){
+        return $this->belongsTo(Order::class);
+    }
+
+    public function reviews(){
+        return $this->hasMany(Reviews::class);
+    }
 }
