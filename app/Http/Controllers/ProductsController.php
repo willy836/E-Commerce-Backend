@@ -23,6 +23,10 @@ class ProductsController extends Controller
         $validatedData = $request->validated();
         $validatedData['user_id'] = Auth::user()->id;
 
+        // Serialize the images array before saving
+        // Explicitly cast the 'images' attribute to JSON since I am not casting in model
+        $validatedData['images'] = json_encode($validatedData['images']);
+
         $product = Product::create($validatedData);
 
         return new ProductResource($product);
@@ -41,9 +45,9 @@ class ProductsController extends Controller
             return response()->json(['message' => 'You are not authorized to update the product'], 403);
         }
 
-        $updatedProduct = $product->update($validatedData);
+        $product->update($validatedData);
 
-        return new ProductResource($updatedProduct);
+        return new ProductResource($product);
     }
 
     public function destroy(Product $product)

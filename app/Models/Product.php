@@ -9,18 +9,14 @@ class Product extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['name', 'images', 'description', 'category_id', 'price', 'quantity', 'sku', 'weight'];
-
-    public function getImagesAttribute($value) {
-        return json_decode($value, true);
-    }
+    protected $fillable = ['name', 'images', 'description', 'category_id', 'user_id', 'price', 'quantity', 'sku', 'weight'];
 
     public function user (){
         return $this->belongsTo(User::class);
     }
 
     public function productCategory(){
-        return $this->belongsTo(ProductCategory::class);
+        return $this->belongsTo(ProductCategory::class, 'category_id');
     }
 
     public function order(){
