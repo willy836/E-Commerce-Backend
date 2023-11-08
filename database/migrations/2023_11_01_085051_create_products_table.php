@@ -20,6 +20,7 @@ return new class extends Migration
             $table->text('description');
             $table->integer('price');
             $table->integer('quantity');
+            $table->integer('amount')->default(0);
             $table->string('sku')->unique();
             $table->decimal('weight', 4,1);
             $table->foreign('user_id')->references('id')->on('users')->cascadeOnDelete();
