@@ -27,6 +27,10 @@ class ProductsController extends Controller
         // Explicitly cast the 'images' attribute to JSON since I am not casting in model
         $validatedData['images'] = json_encode($validatedData['images']);
 
+        if(Auth::user()->is_admin !== 1){
+            return response()->json(['message' => 'You are not authorized to create a product'], 403);
+        }
+
         $product = Product::create($validatedData);
 
         return new ProductResource($product);
@@ -47,7 +51,7 @@ class ProductsController extends Controller
     {
         $validatedData = $request->validated();
 
-        if(Auth::user()->id !== $product->user_id){
+        if(Auth::user()->is_admin !== 1){
             return response()->json(['message' => 'You are not authorized to update the product'], 403);
         }
 
@@ -58,7 +62,7 @@ class ProductsController extends Controller
 
     public function destroy(Product $product)
     {
-        if(Auth::user()->id !== $product->user_id){
+        if(Auth::user()->is_admin !== 1){
             return response()->json(['message' => 'You are not authorized to delete this product'], 403);
         }
 
