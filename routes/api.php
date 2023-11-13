@@ -28,6 +28,6 @@ Route::get('/products/{id}', [ProductsController::class, 'show']);
 
 // PRIVATE
 Route::group(['middleware' => ['auth:sanctum']], function(){
-    Route::resource('/products', ProductsController::class)->only(['store', 'update', 'destroy']);
+    Route::resource('/products', ProductsController::class)->only(['store', 'update', 'destroy'])->middleware('can:admin');
     Route::post('/logout', [AuthController::class, 'logout']);
 });

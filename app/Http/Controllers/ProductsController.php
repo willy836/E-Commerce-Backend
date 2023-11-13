@@ -8,6 +8,7 @@ use App\Http\Resources\ProductResource;
 use App\Models\Product;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Gate;
 
 class ProductsController extends Controller
 {
@@ -20,16 +21,17 @@ class ProductsController extends Controller
     
     public function store(StoreProductRequest $request)
     {
+        // if(!Gate::allows('admin')){
+        //     abort(403);
+        // }
+        $this->authorize('admin');
+
         $validatedData = $request->validated();
         $validatedData['user_id'] = Auth::user()->id;
 
         // Serialize the images array before saving
         // Explicitly cast the 'images' attribute to JSON since I am not casting in model
         $validatedData['images'] = json_encode($validatedData['images']);
-
-        if(Auth::user()->is_admin !== 1){
-            return response()->json(['message' => 'You are not authorized to create a product'], 403);
-        }
 
         $product = Product::create($validatedData);
 
@@ -49,11 +51,9 @@ class ProductsController extends Controller
 
     public function update(UpdateProductRequest $request, Product $product)
     {
-        $validatedData = $request->validated();
+        $this->authorize('admin');
 
-        if(Auth::user()->is_admin !== 1){
-            return response()->json(['message' => 'You are not authorized to update the product'], 403);
-        }
+        $validatedData = $request->validated();
 
         $product->update($validatedData);
 
@@ -62,9 +62,7 @@ class ProductsController extends Controller
 
     public function destroy(Product $product)
     {
-        if(Auth::user()->is_admin !== 1){
-            return response()->json(['message' => 'You are not authorized to delete this product'], 403);
-        }
+        $this->authorize('admin');
 
         $product->delete();
 
