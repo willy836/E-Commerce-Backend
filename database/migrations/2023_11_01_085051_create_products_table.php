@@ -18,11 +18,11 @@ return new class extends Migration
             $table->string('name');
             $table->json('images');
             $table->text('description');
-            $table->integer('price');
-            $table->integer('quantity');
-            $table->integer('amount')->default(0);
+            $table->string('price');
+            $table->string('quantity');
+            $table->string('amount')->default('0');
             $table->string('sku')->unique();
-            $table->decimal('weight', 4,1);
+            $table->string('weight', 4);
             $table->foreign('user_id')->references('id')->on('users')->cascadeOnDelete();
             $table->foreign('category_id')->references('id')->on('product_categories')->cascadeOnDelete();
             $table->timestamps();
