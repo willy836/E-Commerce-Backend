@@ -63,4 +63,4 @@ jobs:
           app-name: 'tide-web-app'
           slot-name: 'Production'
           package: .
-          publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE_12F0DE51AAF44F2EA36BF75A5353B0CA }}
+          publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE_0D30BCB1F0E54E738BE2ECA484CB31B8 }}
