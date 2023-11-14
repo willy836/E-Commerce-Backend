@@ -27,10 +27,10 @@ class UpdateProductRequest extends FormRequest
             'images' => ['sometimes', 'array'],
             'images.*' => ['sometimes', 'url'],
             'description' => ['sometimes', 'string'],
-            'price' => ['sometimes', 'integer', 'min:0'],
-            'quantity' => ['sometimes', 'integer', 'min:0'],
+            'price' => ['sometimes', 'string'],
+            'quantity' => ['sometimes', 'string'],
             'sku' => ['sometimes', 'string'],
-            'weight' => ['sometimes', 'numeric', 'min:0']
+            'weight' => ['sometimes', 'string']
         ];
     }
 }
