@@ -21,16 +21,10 @@ class ProductsController extends Controller
     
     public function store(StoreProductRequest $request)
     {
-        // if(!Gate::allows('admin')){
-        //     abort(403);
-        // }
         $this->authorize('admin');
 
         $validatedData = $request->validated();
-        $validatedData['user_id'] = Auth::user()->id;
 
-        // Serialize the images array before saving
-        // Explicitly cast the 'images' attribute to JSON since I am not casting in model
         $validatedData['images'] = json_encode($validatedData['images']);
 
         $product = Product::create($validatedData);
@@ -54,6 +48,8 @@ class ProductsController extends Controller
         $this->authorize('admin');
 
         $validatedData = $request->validated();
+
+        $validatedData['images'] = json_encode($validatedData['images']);
 
         $product->update($validatedData);
 
