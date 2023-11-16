@@ -25,6 +25,7 @@ class ProductsController extends Controller
 
         $validatedData = $request->validated();
 
+        $validatedData['user_id'] = Auth::user()->id; 
         $validatedData['images'] = json_encode($validatedData['images']);
 
         $product = Product::create($validatedData);
